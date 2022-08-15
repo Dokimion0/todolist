@@ -27,6 +27,8 @@ function Auth(){
 
     const isValidEmail = email.includes('@')
     const isValidPassword = password.length >= 8
+    const a =1
+    
 
    
     
