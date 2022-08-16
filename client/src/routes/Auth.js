@@ -13,7 +13,12 @@ function Auth(){
     const {email, password}= inputs
 
     const onSubmit = e => {
-        e.preventDefault()
+        e.preventDefault();
+        const userInfo = {
+            email : email,
+            password : password
+        }
+        axios.post("/api/add", userInfo); 
     }
 
     const onChange = e => {
@@ -29,19 +34,17 @@ function Auth(){
     const isValidEmail = email.includes('@')
     const isValidPassword = password.length >= 8
     
-     const callApi = async()=>{
-        axios.get("http://localhost:3000/api/add").then(res => console.log(res.data)); 
+    const callApi = async()=>{
+        
     }
 
-    useEffect(()=>{
-        callApi();
-    },[]);
+  
    
     
     
     return(
         <>
-            <form onSubmit={onSubmit} action="/add" method="POST">
+            <form onSubmit={onSubmit} method="POST">
                 <input name="email" type="text" onChange={onChange} placeholder="Email" />
                 <input name="password" type="password" onChange={onChange} placeholder="Password"/>
                 <input disabled={!(isValidEmail&&isValidPassword)} type="submit" value="로그인"/>

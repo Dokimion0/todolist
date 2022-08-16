@@ -32,21 +32,22 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true})) 
 
 
-app.get('/api', (req, res) => {
-  res.send([
-    {
-      'id' : 1,
-      'name' : 'kim',
-    },
-    {
-      'id' : 2,
-      'name' : 'lee',
-    }
-  ])
-});
 
-app.get("/", (req, res) =>{
+app.get("/api", (req, res) =>{
   res.send({Message : "hello Express!"})
+})
+
+app.post("/api/add", (req, res) =>{
+  res.send({ppp : "hello Express!"})
+  console.log(req.body)
+  // const email = req.body.email;
+  // const password = req.body.password;
+  // const user = new User({
+  //   email,
+  //   password,
+  // })
+
+  // user.save();
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
