@@ -1,4 +1,5 @@
-import { useState } from "react"
+import axios from "axios"
+import { useEffect, useState } from "react"
 import Modal from "../components/Modal"
 
 
@@ -28,7 +29,13 @@ function Auth(){
     const isValidEmail = email.includes('@')
     const isValidPassword = password.length >= 8
     
+     const callApi = async()=>{
+        axios.get("http://localhost:3000/api/add").then(res => console.log(res.data)); 
+    }
 
+    useEffect(()=>{
+        callApi();
+    },[]);
    
     
     
