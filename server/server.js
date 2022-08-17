@@ -7,23 +7,21 @@ const port = 5000;
 
 const uri = `mongodb+srv://admin:yjIRRFgGTsSI6rnh@cluster0.qshxzhv.mongodb.net/?retryWrites=true&w=majority`
 const client = new MongoClient(uri);
+const database = client.db("crud");
+const userDB = database.collection("userDB");
 
-async function run() {
-  try {
-    const database = client.db("todoapp");
-    const post = database.collection("post");
-    // create a document to insert
-    const doc = {
-      title: "Record of a Shriveled Datum",
-      content: "No bytes, no problem. Just insert a document, in MongoDB",
-    }
-    const result = await post.insertOne(doc);
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
-  } finally {
-    await client.close();
-  }
-}
-run().catch(console.dir);
+// async function run() {
+//   try {
+//         // const doc = {
+//     //   title: "Record of a Shriveled Datum",
+//     //   content: "No bytes, no problem. Just insert a document, in MongoDB",
+//     // }
+//     // await post.insertOne(doc);
+//   } finally {
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
 
 
 
@@ -33,21 +31,19 @@ app.use(express.urlencoded({extended: true}))
 
 
 
-app.get("/api", (req, res) =>{
-  res.send({Message : "hello Express!"})
+app.get("/api/test", (req, res) =>{
+  database.collection("userDB").find().toArray((err, res) => {
+    console.log(res)
+    if(err) return console.log(err);
+  })
 })
 
 app.post("/api/add", (req, res) =>{
   res.send({ppp : "hello Express!"})
   console.log(req.body)
-  // const email = req.body.email;
-  // const password = req.body.password;
-  // const user = new User({
-  //   email,
-  //   password,
-  // })
-
-  // user.save();
+  database.collection("userDB").insertOne(req.body, (err, res) => {
+    if(err) return console.log(err);
+  })
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`))

@@ -14,11 +14,7 @@ function Auth(){
 
     const onSubmit = e => {
         e.preventDefault();
-        const userInfo = {
-            email : email,
-            password : password
-        }
-        axios.post("/api/add", userInfo); 
+        axios.get("/api/test"); 
     }
 
     const onChange = e => {
@@ -51,7 +47,7 @@ function Auth(){
             </form>
             <span onClick={toggleModal}>회원가입</span>
             {
-                modal ? <Modal onChange={onChange} toggleModal={toggleModal}/>: null
+                modal ? <Modal inputs={inputs} onChange={onChange} toggleModal={toggleModal}/>: null
             }
         </>
     )
