@@ -4,6 +4,8 @@ import Modal from "../components/Modal"
 
 
 function Auth(){
+    const [userObj, setUserObj] = useState(null);
+
     const [btnActive, setBtnActive] = useState(true)
     const [modal, setModal] = useState(false)
     const [inputs, setInputs] = useState({
@@ -13,8 +15,11 @@ function Auth(){
     const {email, password}= inputs
 
     const onSubmit = e => {
-        e.preventDefault();
-        axios.get("/api/test"); 
+        const userInfo = {
+            email : email,
+            password : password
+        }
+        axios.post("/api/data",userInfo); 
     }
 
     const onChange = e => {
@@ -34,10 +39,6 @@ function Auth(){
         
     }
 
-  
-   
-    
-    
     return(
         <>
             <form onSubmit={onSubmit} method="POST">

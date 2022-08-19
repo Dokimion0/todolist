@@ -3,7 +3,7 @@ function Todo(){
  
     return(
         <div>
-            <span>ddf</span>
+            <span>todo page</span>
         </div>
     )
 }

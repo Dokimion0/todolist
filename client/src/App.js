@@ -1,19 +1,30 @@
 import './App.css';
-import { Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Auth from './routes/Auth';
 import Todo from './routes/Todo';
 import axios from "axios"
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { tr } from 'date-fns/locale';
 
 function App() {
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
- 
+
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<Auth/>} />
-        <Route Path="/todo" element={<Todo/>} />
+        {isLoggedIn ? (
+        <>
+          <Route path="/todo" element={<Todo/>} />
+          <Route path="/" element={<Navigate replace to="/todo" />} />
+        </>
+        ) : (
+        <>
+          <Route path="/" element={<Auth/>} />
+        </> 
+        )}
       </Routes>
     </>
   );
