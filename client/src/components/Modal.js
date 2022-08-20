@@ -6,7 +6,7 @@ function Modal({inputs, onChange, toggleModal}){
     const isValidPassword = password.length >= 8
 
     const onSubmit = e => {
-        e.preventDefault()
+        e.preventDefault();
         const userInfo = {
             email : email,
             password : password

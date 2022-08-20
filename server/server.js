@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { MongoClient } = require("mongodb");
 const port = 5000;
 const passport =require('passport');
-const LocalStrategy = require('passport-local');
+const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 
 const uri = `mongodb+srv://admin:yjIRRFgGTsSI6rnh@cluster0.qshxzhv.mongodb.net/?retryWrites=true&w=majority`
@@ -20,16 +21,23 @@ let data =''
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true})) 
-app.use(session({secret : 'code', resave : true, saveUninitialized : false}));
+app.use(session({
+  secret : 'code', 
+  resave : true, 
+  saveUninitialized : true,
+  cookie : { secure : false, maxAge : (4 * 60 * 60 * 1000) }, // 4 hours
+}));
 app.use(passport.initialize());
 app.use(passport.session()); 
+app.use(express.static(path.join('/Users/cy/Desktop/CRUD/client/build')));
 
-app.get("/todo", (req,res)=>{
-  res.send("hi")
+app.get("/api/fail", (req,res)=>{
+  res.send({hi : "hi"})
 })
 
-app.post("/api/data", (req,res) => {
-    console.log(req.body)
+
+app.post("/api/data", passport.authenticate('local', {failureRedirect : '/'}), (req,res) => {
+    res.redirect('/fail')
 });
 
 passport.use(new LocalStrategy({
@@ -38,10 +46,10 @@ passport.use(new LocalStrategy({
   session: true,
   passReqToCallback: false,
 }, (email, password, done) => {
-  //console.log(email, password);
-  database.collection('userDB').findOne({ "email" : email }, (err, res) => {
-    if (err) return done(err)
-
+  console.log('form', email, password);
+  database.collection('userDB').findOne({ email : email }, (err, res) => {
+    if (err) return done(err) 
+    
     if (!res) return done(null, false, { message: '존재하지않는 아이디요' })
     if (password == res.password) {
       return done(null, res)
@@ -51,6 +59,23 @@ passport.use(new LocalStrategy({
   })
 }));
 
+passport.serializeUser(function (user, done) {
+  console.log(user)
+  done(null, user)
+});
+
+passport.deserializeUser( (id, done)=> {
+  console.log('de-serialize', id);
+  done(null, id);
+})
+
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join('/Users/cy/Desktop/CRUD/client/build/index.html'));
+});
+
+
+
 app.post("/api/add", (req, res) =>{
   console.log(req.body)
   database.collection("userDB").insertOne(req.body, (err, res) => {
@@ -58,14 +83,18 @@ app.post("/api/add", (req, res) =>{
   })
 })
 
-// passport.serializeUser(function (user, done) {
-//   done(null, user.email)
+passport.serializeUser(function (user, done) {
+  done(null, user.email)
+});
+
+passport.deserializeUser(function (email, done) {
+  done(null, {})
+}); 
+
+
+// app.get('*', function (req, res) {
+//   res.sendFile(path.join('/Users/cy/Desktop/CRUD/client/build/index.html'));
 // });
-
-// passport.deserializeUser(function (email, done) {
-//   done(null, {})
-// }); 
-
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
 

@@ -15,6 +15,7 @@ function Auth(){
     const {email, password}= inputs
 
     const onSubmit = e => {
+        e.preventDefault();
         const userInfo = {
             email : email,
             password : password

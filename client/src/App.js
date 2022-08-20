@@ -8,7 +8,6 @@ import { tr } from 'date-fns/locale';
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
 
 
@@ -17,7 +16,7 @@ function App() {
       <Routes>
         {isLoggedIn ? (
         <>
-          <Route path="/todo" element={<Todo/>} />
+          <Route path="/todo" element={<Todo isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
           <Route path="/" element={<Navigate replace to="/todo" />} />
         </>
         ) : (
