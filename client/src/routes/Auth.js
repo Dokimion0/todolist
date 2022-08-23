@@ -1,13 +1,12 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Modal from "../components/Modal"
 
 
 function Auth(){
     const [userObj, setUserObj] = useState(null);
-
-    const [btnActive, setBtnActive] = useState(true)
     const [modal, setModal] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
     const [inputs, setInputs] = useState({
         email : "",
         password : ""
@@ -20,7 +19,9 @@ function Auth(){
             email : email,
             password : password
         }
-        axios.post("/api/data",userInfo); 
+        axios.post("/api/data",userInfo).catch( err => {
+            setErrorMsg(err.response.data.msg)
+        })
     }
 
     const onChange = e => {
@@ -29,27 +30,28 @@ function Auth(){
             ...inputs,
             [name] : value
         })
+        setErrorMsg('')
+
     }
 
     const toggleModal = () => setModal(prev => !prev)
 
     const isValidEmail = email.includes('@')
     const isValidPassword = password.length >= 8
-    
-    const callApi = async()=>{
-        
-    }
+
 
     return(
         <>
             <form onSubmit={onSubmit} method="POST">
                 <input name="email" type="text" onChange={onChange} placeholder="Email" />
                 <input name="password" type="password" onChange={onChange} placeholder="Password"/>
-                <input disabled={!(isValidEmail&&isValidPassword)} type="submit" value="로그인"/>
+                <input type="submit" value="로그인"/>
             </form>
+            <div>{errorMsg}</div>
             <span onClick={toggleModal}>회원가입</span>
             {
-                modal ? <Modal inputs={inputs} onChange={onChange} toggleModal={toggleModal}/>: null
+                modal ? <Modal inputs={inputs} onChange={onChange} toggleModal={toggleModal}
+                errorMsg={errorMsg} setErrorMsg={setErrorMsg} />: null
             }
         </>
     )

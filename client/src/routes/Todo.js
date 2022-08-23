@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 function Todo({isLoggedIn, setIsLoggedIn}){
     const navigate = useNavigate();
 
-    const onClick = () =>{
+    const onLogOutClick = () =>{
         setIsLoggedIn(false)
         navigate("/")
     }
@@ -11,7 +11,7 @@ function Todo({isLoggedIn, setIsLoggedIn}){
     return(
         <>
             <span>todo page</span>
-            <button onClick={onClick}>Log out</button>
+            <button onClick={onLogOutClick}>Log out</button>
         </>
     )
 }
