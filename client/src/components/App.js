@@ -4,12 +4,29 @@ import Auth from '../routes/Auth';
 import Todo from '../routes/Todo';
 import Home from '../routes/Home';
 import Navigation from './Navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { tr } from 'date-fns/locale';
+import axios from 'axios';
 
 function App() {
+  const [userObj, setUserObj] = useState(null)
   const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const [userSession, setUserSession] = useState(true)
 
+  const userAuth =() => {
+    axios.get("/api/isAuth")
+    .then(res=>{
+      setIsLoggedIn(true)
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+    console.log(isLoggedIn)
+  }
+
+  useEffect(()=>{
+    userAuth();
+  },[])
 
 
   return (
@@ -23,7 +40,7 @@ function App() {
         </>
         ) : (
         <>
-          <Route path="/" element={<Auth/>} />
+          <Route path="/" element={<Auth userAuth={userAuth} userObj={userObj}/>} />
         </> 
         )}
       </Routes>

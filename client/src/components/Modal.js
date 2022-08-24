@@ -1,12 +1,23 @@
 import axios from "axios"
 import { useState } from "react"
 
-function Modal({inputs, onChange, toggleModal, errorMsg, setErrorMsg}){
+function Modal({toggleModal, errorMsg, setErrorMsg}){
+    const [inputs, setInputs] = useState({
+        email : "",
+        password : ""
+    })
+    
     const {email, password}= inputs
 
-    const isValidEmail = email.includes('@')
-    const isValidPassword = password.length >= 8
 
+    const onChange = e => {
+        const {name, value} = e.target
+        setInputs({
+            ...inputs,
+            [name] : value
+        })
+        // setErrorMsg('')
+    }
     const onSubmit = e => {
         e.preventDefault();
         const userInfo = {
