@@ -1,16 +1,22 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
 
 function Navigation({setIsLoggedIn}){
+    const location = useLocation();
+
     const onLogOutClick = () =>{
         setIsLoggedIn(false)
-        axios.post("/api/logout")
+        axios.delete("/api/logout")
     }
 
     return(
     <>
         <ul>
-            <li><Link to="/todo">Todo</Link></li>
+            {location.pathname === '/todo' ? 
+                <li><Link to="/home">Home</Link></li> : 
+                <li><Link to="/todo">Todo</Link></li>
+            }
             <li onClick={onLogOutClick}><Link to="/">Logout</Link></li>
         </ul>
     </>

@@ -135,6 +135,14 @@ app.post("/api/register", async (req, res) =>{
       }
     })
 
+    app.delete("/api/logout", (req, res) => {
+      req.session.destroy((error) => {
+        if (error) throw error
+    
+        res.clearCookie('session-id')
+        res.status(200).send('Logout Success')
+      })
+    })
 
 
 

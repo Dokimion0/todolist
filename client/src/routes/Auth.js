@@ -21,11 +21,11 @@ function Auth({userAuth, userObj}){
         axios.post("/api/login",userInfo)
         .then( res => {
             alert(res.data.msg);
+            userAuth();
         })
         .catch( err => {
             setErrorMsg(err.response.data.msg)
         })
-        userAuth();
     }
 
     const onChange = e => {
