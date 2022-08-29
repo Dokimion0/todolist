@@ -40,19 +40,19 @@ function Auth({userAuth, userObj}){
     const toggleModal = () => setModal(prev => !prev)
 
     return(
-        <>
-            <form onSubmit={onSubmit} method="POST">
-                <input name="email" type="text" onChange={onChange} placeholder="Email" />
-                <input name="password" type="password" onChange={onChange} placeholder="Password"/>
-                <input type="submit" value="로그인"/>
+        <div className="authContainer">
+            <form className="container" onSubmit={onSubmit} method="POST">
+                <input className="authInput" name="email" type="text" onChange={onChange} placeholder="Email" />
+                <input className="authInput" name="password" type="password" onChange={onChange} placeholder="Password"/>
+                <input className="authInput authSubmit" type="submit" value="로그인"/>
             </form>
-            <div>{errorMsg}</div>
-            <span onClick={toggleModal}>회원가입</span>
+            <span className="authSignUp" onClick={toggleModal}>회원가입</span>
+            <span className="errorMessage">{errorMsg}</span>
             {
                 modal ? <Modal toggleModal={toggleModal}
                 errorMsg={errorMsg} setErrorMsg={setErrorMsg} />: null
             }
-        </>
+        </div>
     )
 }
 

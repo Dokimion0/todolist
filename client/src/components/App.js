@@ -35,6 +35,8 @@ function App() {
   return (
     <>
     {isLoggedIn && <Navigation setIsLoggedIn={setIsLoggedIn}/>}
+    <div style={{maxWidth: 890,width: "100%",margin: "0 auto",marginTop: 80,display: "flex",
+    justifyContent: "center",}}>   
       <Routes>
         {isLoggedIn ? (
         <>
@@ -48,6 +50,7 @@ function App() {
         </> 
         )}
       </Routes>
+      </div>
     </>
   );
 }

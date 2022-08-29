@@ -1,3 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  color: white;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -12,7 +23,7 @@
 
 .modalBody {
   position: absolute;
-  width: 300px;
+  width: 500px;
   height: 500px;
   padding: 40px;
   text-align: center;
@@ -21,7 +32,7 @@
   box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 }
 
-.closebtn{
+.closebtn {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -29,4 +40,56 @@
   color: rgba(0, 0, 0, 0.7);
   background-color: transparent;
   font-size: 20px;
+}
+
+/* Auth */
+
+.authContainer {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.authInput {
+  max-width: 320px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.authSignUp {
+  color: #04aaff;
+  cursor: pointer;
+  display: block;
+  font-size: 12px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 300px;
+}
+
+.errorMessage{
+  font-size: 12px;
+  display: block;
+  color: red;
+  position : absolute;
+  bottom: 80px;
+}
+
+.authSubmit {
+  text-align: center;
+  background: #36BC9B;
+  color: white;
+  margin-top: 10;
+  cursor: pointer;
+  border: none;
 }

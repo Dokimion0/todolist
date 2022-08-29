@@ -36,11 +36,13 @@ function Modal({toggleModal, errorMsg, setErrorMsg}){
 
     return(
         <div className="modal">
-            <form onSubmit={onSubmit} className="modalBody">
+            <form className="container"onSubmit={onSubmit} className="modalBody">
                 <button onClick={toggleModal}className="closebtn">×</button>
-                <input name="email" type="text" onChange={onChange} placeholder="Email" />
-                <input name="password" type="password" onChange={onChange} placeholder="Password"/>
-                <input type="submit" value="회원가입"/>
+                <span style={{color : "black", display : "block", marginBottom : "50px", 
+                        fontSize : "20px", fontWeight: "bold"}}>회원가입</span>
+                <input className="authInput" name="email" type="text" onChange={onChange} placeholder="Email" />
+                <input className="authInput" name="password" type="password" onChange={onChange} placeholder="Password"/>
+                <input className="authInput authSubmit" type="submit" value="가입하기"/>
             </form>
             <div>{errorMsg}</div>
         </div>
