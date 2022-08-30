@@ -93,3 +93,7 @@ body {
   cursor: pointer;
   border: none;
 }
+
+span{
+  color: black;
+}
