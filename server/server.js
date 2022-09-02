@@ -136,6 +136,16 @@ app.delete('/api/logout', (req, res) => {
   });
 });
 
+app.post('/api/task', async(req,res) => {
+  await database.collection('TodoDB').insertOne(req.body);
+})
+
+app.get('/api/tasks', async(req,res) => {
+  const task = await database.collection('TodoDB').find({email : req.session.user.email})
+  const taskArray = await task.toArray();
+  res.json(taskArray)
+})
+
 // app.get('*', function (req, res) {
 //   res.sendFile(path.join('/Users/cy/Desktop/CRUD/client/build/index.html'));
 // });

@@ -1,14 +1,13 @@
+import { useEffect } from "react";
 
 
-function Home({isLoggedIn, setIsLoggedIn}){
+function Home(){
+    
 
-    const onClick = ()=>{
-        console.log({isLoggedIn})
-    }
+
     return(
         <>
             <span>home</span>
-            <button onClick={onClick}>isLoggedIn</button>
         </>
     )
 }

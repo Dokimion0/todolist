@@ -17,14 +17,15 @@ function App() {
     axios.get("/api/isAuth")
     .then(res=>{
       setIsLoggedIn(true)
-      console.log('then:', isLoggedIn)
-
+      setUserObj({
+        email : res.data.email
+      })
     })
     .catch(err =>{
       console.log(err)
     })
-    console.log(isLoggedIn)
   }
+
 
   useEffect(() =>{
     userAuth();
@@ -41,7 +42,7 @@ function App() {
         {isLoggedIn ? (
         <>
           <Route path="/home" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
-          <Route path="/todo" element={<Todo />} />
+          <Route path="/todo" element={<Todo userObj={userObj}/>} />
           <Route path="/" element={<Navigate replace to="/home" />} />
         </>
         ) : (
