@@ -141,9 +141,14 @@ app.post('/api/task', async(req,res) => {
 })
 
 app.get('/api/tasks', async(req,res) => {
-  const task = await database.collection('TodoDB').find({email : req.session.user.email})
+  const task = await database.collection('TodoDB').find({email : req.session.user.email}).sort({"createdAt" : -1})
   const taskArray = await task.toArray();
   res.json(taskArray)
+})
+
+app.delete('/api/task', async(req,res) =>{
+  console.log(req.body)
+  const task = await database.collection('TodoDB').deleteOne({text : req.body.text})
 })
 
 // app.get('*', function (req, res) {

@@ -13,7 +13,6 @@ function Todo({userObj}) {
   const getTasks = () => {
     axios.get('api/tasks')
     .then(res => {
-      console.log(res.data)
       setTasks(res.data)
     })
     .catch(err => {
@@ -25,15 +24,12 @@ function Todo({userObj}) {
       getTasks();
   },[])
 
-
-
   const toggleEdit = () => {
-    setEditing(prev => !prev)
+    setEditing(true)
   }
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('a')
     const taskObj = {
       text : task,
       createdAt: Date.now(),
@@ -47,6 +43,14 @@ function Todo({userObj}) {
     setTask(value)
   }
 
+  const onDeleteClick = (text) => {
+    console.log(text)
+    const ok = window.confirm("삭제하시겠습니까?");
+    if(ok){
+      axios.delete("/api/task",{data : {text}})
+    }
+  }
+
   return (
     <>
       <div className="headerContent">
@@ -57,7 +61,7 @@ function Todo({userObj}) {
             <div key={i}>
               <h4>{task.text}</h4>
               <button>edit</button>
-              <button>delete</button>
+              <button onClick={() => onDeleteClick(task.text)}>delete</button>
             </div>
           ))}
         </div>
@@ -68,23 +72,19 @@ function Todo({userObj}) {
         )}
       </div>
       <div className="viewContent">
-        <ul>
-          <li>
-            <form onSubmit={onSubmit}>
-              {editing &&(
-              <div className="editor">
-                <div className="editorInput">
-                  <input value={task} onChange={onChange} type="text"/>
-                </div>
-                <div className="editorBtn">
-                  <button onClick={toggleEdit}>Cancel</button>
-                </div>
-              </div>
-              )}
-              <button type='sumbit' onClick={toggleEdit}>Add</button>
-            </form>
-          </li>
-        </ul>
+        { editing && (
+        <form onSubmit={onSubmit}>
+          <div className="editor">
+            <div className="editorInput">
+              <input value={task} onChange={onChange} type="text"/>
+            </div>
+            <div className="editorBtn">
+              <button type='button'>Cancel</button>
+            </div>
+          </div>
+          <button type='sumbit' onClick={toggleEdit}>Add</button>
+        </form>
+        )}
       </div>
     </>
   );
