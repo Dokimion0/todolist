@@ -22,7 +22,7 @@ function Todo({userObj}) {
 
   useEffect(()=>{
       getTasks();
-  },[])
+  },[tasks])
 
   const toggleEdit = () => {
     setEditing(true)
@@ -53,6 +53,7 @@ function Todo({userObj}) {
 
   return (
     <>
+     
       <div className="headerContent">
         <span>Today</span>
         <span>{date}</span>
