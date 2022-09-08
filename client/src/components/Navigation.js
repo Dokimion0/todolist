@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBeer } from 'react-icons/fa';
-import { IconName, AiOutlineMenu } from 'react-icons/ai';
+import {  AiOutlineMenu } from 'react-icons/ai';
 
 function Navigation({ setIsLoggedIn }) {
   const location = useLocation();
@@ -32,7 +31,7 @@ function Navigation({ setIsLoggedIn }) {
           </li>
         </div>
         <div className='navRight'>
-            <li>Profile</li>
+            <li onClick={onLogOutClick}>Profile</li>
         </div>
       </nav>
       {/* <ul>

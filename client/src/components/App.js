@@ -5,7 +5,6 @@ import Todo from '../routes/Todo';
 import Home from '../routes/Home';
 import Navigation from './Navigation';
 import { useEffect, useState } from 'react';
-import { tr } from 'date-fns/locale';
 import axios from 'axios';
 
 function App() {
@@ -34,16 +33,16 @@ function App() {
   return (
     <>
       {isLoggedIn && <Navigation setIsLoggedIn={setIsLoggedIn} />}
-      <div
+      {/* <div
         style={{
           maxWidth: 890,
           width: '100%',
           margin: '0 auto',
-          marginTop: 80,
+          marginTop: 60,
           display: 'flex',
           justifyContent: 'center',
         }}
-      >
+      > */}
         <Routes>
           {isLoggedIn ? (
             <>
@@ -65,7 +64,7 @@ function App() {
             </>
           )}
         </Routes>
-      </div>
+      {/* </div> */}
     </>
   );
 }
