@@ -41,6 +41,7 @@ function Todo({ userObj }) {
       email: userObj.email,
     };
     axios.post('/api/task', taskObj);
+    setTask('');
   };
 
   const onChange = (e) => {
@@ -80,15 +81,6 @@ function Todo({ userObj }) {
       </div>
 
       <div className="taskContents">
-        <div className="taskItem">
-          {tasks.map((task, i) => (
-            <div key={i}>
-              <h4>{task.text}</h4>
-              <button>edit</button>
-              <button onClick={() => onDeleteClick(task.text)}>delete</button>
-            </div>
-          ))}
-        </div>
         {!editing && (
           <div className="taskContent-btn">
             <span onClick={toggleEdit}>
@@ -112,13 +104,26 @@ function Todo({ userObj }) {
                 </div>
               </div>
               <div className="editorBtn">
-                <button type="button">수정</button>
               </div>
               <button type="sumbit" onClick={toggleEdit}>
                 추가
               </button>
             </form>
           )}
+        </div>
+
+        <div className="taskItems">
+          {tasks.map((task, i) => (
+            <div className="taskItem editor" key={i}>
+              <div>
+                <span>{task.text}</span>
+              </div>
+              <div className="taskItem-btn">
+                <button>수정</button>
+                <button onClick={() => onDeleteClick(task.text)}>삭제</button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>

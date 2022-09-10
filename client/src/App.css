@@ -131,15 +131,21 @@ body {
   cursor: pointer;
 }
 
-.viewContent {
+.viewContent,
+.taskItem {
   width: 100%;
   background: white;
   box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
+  margin-bottom: 20px;
 }
 
 .taskItem {
-  margin: 4px 0;
+  height: 72px;
+}
+
+.taskItem-btn {
+  align-items: flex-end;
 }
 
 .editor {
@@ -159,7 +165,8 @@ body {
   box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.1);
 }
 
-form > button, .editorBtn button {
+form > button,
+.editorBtn button {
   font-weight: bold;
   cursor: pointer;
   color: #2564cf;
@@ -170,7 +177,7 @@ form > button, .editorBtn button {
   width: 60px;
 }
 
-form > button{
+form > button {
   margin-bottom: 8px;
 }
 
