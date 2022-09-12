@@ -1,6 +1,11 @@
 :root {
   --bg-primary: #ededed;
-  --bg-active : #ecf6fd;
+  --bg-task-active: #ecf6fd;
+  --font-color-contextmenu: #797775;
+  --bg-navbar: #0078d7;
+  --bg-hover: #f6f6f5;
+  --font-color-secondary: #797775;
+  --font-color-primary: #323130;
 }
 
 * {
@@ -12,8 +17,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 1rem;
-  color: black;
+  color: var(--font-color-primary);
 }
+
 .modal {
   position: fixed;
   top: 0;
@@ -124,7 +130,7 @@ body {
 
 .subline span {
   font-size: 0.8rem;
-  color: darkgray;
+  color: var(--font-color-secondary)
 }
 
 .taskContents {
@@ -152,7 +158,7 @@ body {
 }
 
 .editor {
-  padding: 10px 15px;
+  padding: 8px 14px;
 }
 
 .editorInput input {
@@ -184,28 +190,50 @@ form > button {
   margin-bottom: 8px;
 }
 
-.test{
+.test {
   background-color: red;
   color: red;
 }
 
 .active {
-  background: var(--bg-active)
+  background: var(--bg-task-active);
 }
 
-.contextMenu{
+.contextMenu {
   border-radius: 4px;
   box-sizing: border-box;
   position: absolute;
-  width: 200px;
-  background-color: #383838;
-  box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  background-color: white;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.contextMenu ul {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+}
+
+.contextMenu li {
+  color: var(--font-color-contextmenu);
+  padding: 4px 12px;
+  font-size: 0.9rem;
+}
+
+.contextMenu li:hover {
+  background: #f6f6f5;
+  cursor: pointer;
+}
+
+.metaDataInfo {
+  font-size: 0.6rem;
+  color: var(--font-color-secondary);
 }
 
 /* Navigation */
 nav {
   display: flex;
-  background: #0078d7;
+  background: var(--bg-navbar);
   height: 48px;
   color: white;
   font-size: 16px;
@@ -226,8 +254,8 @@ nav {
 }
 
 nav li {
-  line-height: 48px;
   list-style: none;
+  line-height: 48px;
   padding: 0 12px 0 12px;
 }
 

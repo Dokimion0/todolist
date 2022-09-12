@@ -52,7 +52,8 @@ function Todo({ userObj }) {
     setTask(value);
   };
 
-  const onDeleteClick = (text) => {
+  const onDeleteClick = (e, text) => {
+    e.preventDefault();
     console.log(text);
     const ok = window.confirm('삭제하시겠습니까?');
     if (ok) {
@@ -60,11 +61,20 @@ function Todo({ userObj }) {
     }
   };
 
-  const onContextMenu = (e, i) => {
+  const onContextMenu = (e, i, text) => {
     e.preventDefault();
     setContextMenu(true);
+    setTaskIndex(i);
     setPoints({ x: e.pageX, y: e.pageY });
+    console.log(taskIndex, text, i);
   };
+
+  const onClickTask = (text, i) => {
+    setTaskIndex(i);
+    console.log(text, i);
+    setContextMenu(false);
+  };
+
   return (
     <>
       <div className="taskToolbar">
@@ -122,31 +132,37 @@ function Todo({ userObj }) {
             <div
               className={'taskItem editor' + (i === taskIndex ? ' active' : '')}
               key={i}
-              onClick={() => {
-                setTaskIndex(i)
-                setContextMenu(false)
-              }}
-              onContextMenu={onContextMenu}
+              onClick={(e) => onClickTask(task.text, i)}
+              onContextMenu={(e) => onContextMenu(e, i, task.text)}
             >
               <div className="taskItem-title">
                 <span>{task.text}</span>
-              </div>
-              <div className="taskItem-btn">
-                <button>edit</button>
-                <button onClick={() => onDeleteClick(task.text)}>delete</button>
-              </div>
-              {contextMenu && (
-                <div
-                  className="contextMenu"
-                  style={{ top: points.y, left: points.x }}
-                  value={i}
-                >
-                  <ul>
-                    <li>삭제</li>
-                    <li>수정</li>
-                  </ul>
+                <div className="metaDataInfo">
+                  <span>작업</span>
                 </div>
-              )}
+
+                {contextMenu && (
+                  <div
+                    className="contextMenu"
+                    style={{ top: points.y, left: points.x }}
+                  >
+                    <ul>
+                      <li>
+                        <div className="contextMenu-list">
+                          <span>수정</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="contextMenu-list">
+                          <span onClick={(e) => onDeleteClick(e, task.text)}>
+                            삭제
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
