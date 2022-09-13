@@ -161,7 +161,7 @@ function Todo({ userObj }) {
                       </li>
                       <li onClick={() => onDeleteClick(text)}>
                         <div className="contextMenu-list">
-                          <span>삭제 test</span>
+                          <span>삭제 test2</span>
                         </div>
                       </li>
                     </ul>
