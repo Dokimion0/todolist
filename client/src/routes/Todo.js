@@ -32,7 +32,6 @@ function Todo({ userObj }) {
 
   useEffect(() => {
     getTasks();
-    
   }, []);
 
   const toggleEdit = () => {
@@ -152,6 +151,7 @@ function Todo({ userObj }) {
                   <div
                     className="contextMenu"
                     style={{ top: points.y, left: points.x }}
+                    value={i}
                   >
                     <ul>
                       <li>
@@ -161,7 +161,7 @@ function Todo({ userObj }) {
                       </li>
                       <li onClick={() => onDeleteClick(text)}>
                         <div className="contextMenu-list">
-                          <span>삭제</span>
+                          <span>삭제 test</span>
                         </div>
                       </li>
                     </ul>
