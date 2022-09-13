@@ -7,6 +7,11 @@ function Todo({ userObj }) {
   const [editing, setEditing] = useState(false);
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [taskIndex, setTaskIndex] = useState('');
+  const [text, setText] = useState('');
+
+  const [points, setPoints] = useState({ x: 0, y: 0 });
+  const [contextMenu, setContextMenu] = useState(false);
 
   const date = new Date();
   const month = date.getUTCMonth() + 1;
@@ -27,7 +32,8 @@ function Todo({ userObj }) {
 
   useEffect(() => {
     getTasks();
-  }, [tasks]);
+    
+  }, []);
 
   const toggleEdit = () => {
     setEditing(true);
@@ -55,6 +61,24 @@ function Todo({ userObj }) {
     if (ok) {
       axios.delete('/api/task', { data: { text } });
     }
+    setContextMenu(false);
+  };
+
+  const onContextMenu = (e, i, text) => {
+    e.preventDefault();
+    setContextMenu(true);
+    setTaskIndex(i);
+    setText(text);
+    setPoints({ x: e.pageX, y: e.pageY });
+    console.log(taskIndex, text, i);
+  };
+
+  const onClickTask = (e, text, i) => {
+    e.preventDefault();
+    setTaskIndex(i);
+    console.log(text, i);
+    setContextMenu(false);
+    console.log('??');
   };
 
   return (
@@ -89,7 +113,6 @@ function Todo({ userObj }) {
             </span>
           </div>
         )}
-
         <div className="viewContent">
           {editing && (
             <form onSubmit={onSubmit}>
@@ -104,23 +127,46 @@ function Todo({ userObj }) {
                 </div>
               </div>
               <div className="editorBtn">
+                <button type="sumbit" onClick={toggleEdit}>
+                  추가
+                </button>
               </div>
-              <button type="sumbit" onClick={toggleEdit}>
-                추가
-              </button>
             </form>
           )}
         </div>
-
         <div className="taskItems">
           {tasks.map((task, i) => (
-            <div className="taskItem editor" key={i}>
-              <div>
+            <div
+              className={'taskItem editor' + (i === taskIndex ? ' active' : '')}
+              key={i}
+              onContextMenu={(e) => onContextMenu(e, i, task.text)}
+              onClick={(e) => onClickTask(e, task.text, i)}
+            >
+              <div className="taskItem-title">
                 <span>{task.text}</span>
-              </div>
-              <div className="taskItem-btn">
-                <button>수정</button>
-                <button onClick={() => onDeleteClick(task.text)}>삭제</button>
+                <div className="metaDataInfo">
+                  <span>작업</span>
+                </div>
+
+                {contextMenu && (
+                  <div
+                    className="contextMenu"
+                    style={{ top: points.y, left: points.x }}
+                  >
+                    <ul>
+                      <li>
+                        <div className="contextMenu-list">
+                          <span>수정</span>
+                        </div>
+                      </li>
+                      <li onClick={() => onDeleteClick(text)}>
+                        <div className="contextMenu-list">
+                          <span>삭제</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
           ))}
