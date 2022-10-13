@@ -20,6 +20,12 @@ const mongoDBstore = new MongoDBStore({
   collection: 'mySessions',
 });
 
+app.use(express.static('build'));
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/build/index.html');
+});
+
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -36,8 +42,6 @@ app.use(
     saveUninitialized: false,
   }),
 );
-
-app.use(express.static(path.join('/Users/cy/Desktop/CRUD/client/build')));
 
 app.get('/api/fail', (req, res) => {
   res.send({ fail: 'fail' });
@@ -159,5 +163,9 @@ app.delete('/api/task', async (req, res) => {
 // app.get('*', function (req, res) {
 //   res.sendFile(path.join('/Users/cy/Desktop/CRUD/client/build/index.html'));
 // });
+
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/build/index.html');
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
