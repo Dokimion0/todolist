@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "heroku-prebuild": "cd client && npm ci && npm run build && mv build ../server",
-    "start": "cd server && npm ci && nodeserver.js",
+    "heroku-prebuild": "cd client && npm ci && npm run build && move build ../server",
+    "start": "cd server && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd client && npm start",
     "server": "cd server && nodemon server.js",
