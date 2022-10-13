@@ -11,13 +11,13 @@
 Express 기반의 Backend와 React 기반의 Frontend 개발
   
 ### Features
----
+
 * 쿠키를 이용한 로그인 처리
 * todolist 목록 추가 및 삭제
 
   
 ### Skills
----
+
 <div>
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
