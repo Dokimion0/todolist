@@ -8,7 +8,7 @@
   },
   "scripts": {
     "client-build": "cd client && npm ci && npm run build && cd ../",
-    "server-build": "cd server && npm ci --dev && npm run build && cd ../",
+    "server-build": "cd server && npm ci --dev && cd ../",
     "heroku-prebuild": "npm run client-build && npm run server-build && mv ./client/build ./server/",
     "start": "cd server && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
