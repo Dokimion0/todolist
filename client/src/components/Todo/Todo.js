@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { AiOutlineBars, AiOutlinePlus } from 'react-icons/ai';
-import { BiSort } from 'react-icons/bi';
+import { AiOutlinePlus } from 'react-icons/ai';
+import TodoItem from './TodoItem';
 
-const TodoPage = ({ userObj }) => {
+const Todo = ({ userObj }) => {
   const [editing, setEditing] = useState(false);
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
@@ -17,8 +17,8 @@ const TodoPage = ({ userObj }) => {
   const month = date.getUTCMonth() + 1;
   const day = date.getUTCDate();
   const week = ['일', '월', '화', '수', '목', '금', '토'];
-  const dayOfWeek = week[new Date('2016-07-28').getDay()];
-
+  const dayOfWeek = week[date.getDay()];
+  const todayDate = [date, month, day, dayOfWeek];
   const getTasks = () => {
     axios
       .get('api/tasks')
@@ -82,27 +82,7 @@ const TodoPage = ({ userObj }) => {
 
   return (
     <>
-      <div className="taskToolbar">
-        <div className="taskToolbar-title">
-          <div className="taskToolbar-item">
-            <AiOutlineBars size="18" />
-          </div>
-          <div className="taskToolbar-item" style={{ flexBasis: 400 }}>
-            <h2>오늘 할 일</h2>
-          </div>
-          <div className="taskToolbar-item">
-            <div className="action">
-              <BiSort size="18" />
-            </div>
-          </div>
-        </div>
-        <div className="subline">
-          <span>
-            {month}월 {day}일 {dayOfWeek}요일
-          </span>
-        </div>
-      </div>
-
+      <TodoItem date={todayDate} />
       <div className="taskContents">
         {!editing && (
           <div className="taskContent-btn">
@@ -176,4 +156,4 @@ const TodoPage = ({ userObj }) => {
   );
 };
 
-export default TodoPage;
+export default Todo;

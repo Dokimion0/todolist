@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import Modal from '../Modal';
+import Modal from './Modal';
 
 function Auth({ userAuth, userObj }) {
   const [modal, setModal] = useState(false);
