@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
+import TodoForm from './TodoForm';
 import '../../App.css';
+
+import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import axios from 'axios';
 
-const TodoItem = ({userObj}) => {
+const TodoItem = ({ userObj }) => {
   const [points, setPoints] = useState({ x: 0, y: 0 });
   const [contextMenu, setContextMenu] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [taskIndex, setTaskIndex] = useState('');
   const [text, setText] = useState('');
-  const [editing, setEditing] = useState(false);
-  const [task, setTask] = useState('');
+  const [isEditing, isSetEditing] = useState(false);
 
   const getTasks = () => {
     axios
@@ -27,24 +28,8 @@ const TodoItem = ({userObj}) => {
     getTasks();
   }, []);
 
-  const toggleEdit = () => {
-    setEditing(true);
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const taskObj = {
-      text: task,
-      createdAt: Date.now(),
-      email: userObj.email,
-    };
-    axios.post('/api/task', taskObj);
-    setTask('');
-  };
-
-  const onChange = (e) => {
-    const { value } = e.target;
-    setTask(value);
+  const onToggleHandler = (prev) => {
+    isSetEditing((prev) => !prev);
   };
 
   const onDeleteClick = (text) => {
@@ -74,33 +59,17 @@ const TodoItem = ({userObj}) => {
   };
   return (
     <div className="taskContents">
-      {!editing && (
+      {!isEditing && (
         <div className="taskContent-btn">
-          <span onClick={toggleEdit}>
+          <span onClick={onToggleHandler}>
             <AiOutlinePlus color="#0078d7" />
             Add task
           </span>
         </div>
       )}
       <div className="viewContent">
-        {editing && (
-          <form onSubmit={onSubmit}>
-            <div className="editor">
-              <div className="editorInput">
-                <input
-                  placeholder="Add task"
-                  value={task}
-                  onChange={onChange}
-                  type="text"
-                />
-              </div>
-            </div>
-            <div className="editorBtn">
-              <button type="sumbit" onClick={toggleEdit}>
-                추가
-              </button>
-            </div>
-          </form>
+        {isEditing && (
+          <TodoForm userObj={userObj} onCancel={onToggleHandler} />
         )}
       </div>
       <div className="taskItems">
