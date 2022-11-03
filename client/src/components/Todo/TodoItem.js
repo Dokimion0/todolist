@@ -13,7 +13,15 @@ const TodoItem = ({ userObj }) => {
   const [text, setText] = useState('');
   const [isEditing, isSetEditing] = useState(false);
 
-  const getTasks = () => {
+  const onTest = () => {
+    console.log(tasks);
+  };
+
+  const AddTasksHandler = (taskObj) => {
+    axios.post('api/task', taskObj);
+  };
+
+  useEffect(() => {
     axios
       .get('api/tasks')
       .then((res) => {
@@ -22,10 +30,6 @@ const TodoItem = ({ userObj }) => {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  useEffect(() => {
-    getTasks();
   }, []);
 
   const onToggleHandler = (prev) => {
@@ -59,6 +63,7 @@ const TodoItem = ({ userObj }) => {
   };
   return (
     <div className="taskContents">
+      <button onClick={onTest}>console.log</button>
       {!isEditing && (
         <div className="taskContent-btn">
           <span onClick={onToggleHandler}>
@@ -69,7 +74,11 @@ const TodoItem = ({ userObj }) => {
       )}
       <div className="viewContent">
         {isEditing && (
-          <TodoForm userObj={userObj} onCancel={onToggleHandler} />
+          <TodoForm
+            userObj={userObj}
+            onCancel={onToggleHandler}
+            onAddTasks={AddTasksHandler}
+          />
         )}
       </div>
       <div className="taskItems">

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-const TodoForm = ({ userObj, onCancel }) => {
+const TodoForm = ({ userObj, onCancel, onAddTasks }) => {
   const [task, setTask] = useState('');
 
   const onSubmit = (e) => {
@@ -11,7 +11,7 @@ const TodoForm = ({ userObj, onCancel }) => {
       createdAt: Date.now(),
       email: userObj.email,
     };
-    axios.post('/api/task', taskObj);
+    onAddTasks(taskObj);
     setTask('');
   };
 
@@ -33,8 +33,10 @@ const TodoForm = ({ userObj, onCancel }) => {
         </div>
       </div>
       <div className="editorBtn">
-        <button type="sumbit">추가</button>
-        <button type="button" onClick={onCancel}>취소</button>
+        <button type="submit">추가</button>
+        <button type="button" onClick={onCancel}>
+          취소
+        </button>
       </div>
     </form>
   );
